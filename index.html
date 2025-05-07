@@ -3,261 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diwali Wishes</title>
+    <title>दिवाली की शुभकामनाएँ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@700&family=Hind+Siliguri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Hind Siliguri', sans-serif;
             text-align: center;
-            background-color: #f0f0f0;
-            padding: 20px;
             margin: 0;
+            padding: 0;
+            background: radial-gradient(ellipse at bottom, #2c0a07, #000000);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 95vh;
+            justify-content: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
         }
+
         .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            max-width: 500px;
+            background-color: rgba(50, 10, 5, 0.85);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 165, 0, 0.5), 0 0 10px rgba(255, 215, 0, 0.3) inset;
+            max-width: 550px;
             width: 90%;
+            border: 2px solid #ffc966;
+            position: relative;
+            z-index: 10;
         }
+
         #diwaliImage {
-            max-width: 100%;
+            max-width: 80%;
             height: auto;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 20px;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 15px #ffc107;
         }
+
         #greetingMessage {
-            font-size: 2em;
-            color: #ff6600;
-            margin-bottom: 20px;
+            font-family: 'Charm', cursive;
+            font-size: 2.5em;
+            color: #ffc107;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px #000;
+        }
+        .from-sender {
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 1.2em;
+            color: #ffe0b2;
+            margin-bottom: 25px;
+            display: block;
             font-weight: bold;
         }
+
         .input-group {
             margin-top: 20px;
             margin-bottom: 20px;
         }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: calc(100% - 22px); /* Account for padding and border */
-            margin-bottom: 10px;
+        .input-group label {
+            color: #ffebcc;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 8px;
         }
-        button {
-            padding: 10px 20px;
+        input[type="text"] {
+            padding: 12px;
             font-size: 1em;
-            color: white;
-            background-color: #4CAF50;
+            border: 1px solid #ffc966;
+            border-radius: 8px;
+            width: calc(100% - 26px);
+            margin-bottom: 10px;
+            background-color: #fff5e6;
+            color: #333;
+        }
+        input[type="text"]::placeholder {
+            color: #888;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            color: #4a1a0a;
+            background: linear-gradient(145deg, #ffd700, #ffac33);
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px #fff5e6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
         button:hover {
-            background-color: #45a049;
+            background: linear-gradient(145deg, #ffac33, #ffd700);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
         }
+
         #generatedLinkContainer {
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 0.9em;
         }
+        #generatedLinkContainer p {
+            color: #ffebcc;
+            margin-bottom: 5px;
+        }
         #generatedLinkContainer input[type="text"] {
-            width: calc(100% - 80px); /* Adjust width for button */
-            margin-right: 5px;
+            width: calc(100% - 95px);
+            margin-right: 8px;
+            font-size: 0.95em;
         }
         #generatedLinkContainer button {
-            width: 70px;
-            padding: 10px 5px;
+            width: 80px;
+            padding: 12px 5px;
+            font-size: 0.95em;
         }
 
-        /* Animation */
-        .animated-greeting {
-            animation: festiveAnimation 2.5s ease-out forwards;
-            opacity: 0; /* Start hidden */
+        .animated-greeting-main, .animated-greeting-from {
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .animated-greeting-main {
+            animation: festivePop 1.5s ease-out 0.5s forwards;
+        }
+        .animated-greeting-from {
+            animation: fadeInFromBottom 1.5s ease-out 1s forwards;
         }
 
-        @keyframes festiveAnimation {
-            0% {
-                transform: scale(0.5) rotate(-10deg);
-                opacity: 0;
-                color: #FFC107; /* Amber */
-            }
-            50% {
-                transform: scale(1.1) rotate(5deg);
-                opacity: 0.7;
-                color: #FF9800; /* Orange */
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-                color: #E65100; /* Deep Orange */
-            }
+        @keyframes festivePop {
+            0% { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+            60% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        @keyframes fadeInFromBottom {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
 
         .footer {
-            margin-top: auto; /* Pushes footer to bottom */
-            padding-top: 20px;
-            font-size: 0.8em;
-            color: #555;
+            margin-top: 30px;
+            padding-top: 15px;
+            font-size: 0.9em;
+            color: #ffc966;
+            border-top: 1px solid #6f3322;
+            width: 80%;
+            max-width: 500px;
         }
     </style>
 </head>
 <body>
+    <canvas id="fireworksCanvas"></canvas>
+
     <div class="container">
         <img id="diwaliImage" src="laxmi.gif" alt="Happy Diwali Animation">
 
-        <h1 id="greetingMessage"></h1>
+        <h1 id="greetingMessage"><span id="mainGreeting"></span></h1>
+        <span id="fromSenderMessage" class="from-sender"></span>
 
         <div class="input-group">
-            <label for="senderNameInput">Apna Naam Likhein:</label><br>
-            <input type="text" id="senderNameInput" placeholder="Yahan apna naam daalein">
+            <label for="senderNameInput">आपका शुभ नाम:</label>
+            <input type="text" id="senderNameInput" placeholder="यहाँ अपना नाम लिखें">
         </div>
 
-        <button onclick="generateLink()">Wishing Link Banayein</button>
+        <button onclick="generateAndShareLink()">शुभकामना लिंक बनाएं व शेयर करें</button>
 
         <div id="generatedLinkContainer" style="display:none;">
-            <p>Yeh link copy karke share karein:</p>
+            <p>या यह लिंक कॉपी करके शेयर करें:</p>
             <input type="text" id="generatedLink" readonly>
-            <button onclick="copyLink()">Copy</button>
+            <button onclick="copyLink()">कॉपी</button>
         </div>
     </div>
 
     <div class="footer">
-        <p>Happy Diwali!</p>
+        <p>आपको और आपके परिवार को दीपावली की हार्दिक शुभकामनाएँ!</p>
     </div>
 
     <script>
+        // --- Firework Code STARTS --- (Pahle jaisa hi)
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        let fireworks = [];
+        let particles = [];
+
+        function setupCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setupCanvas();
+        window.addEventListener('resize', setupCanvas);
+
+        class Firework {
+            constructor(x, y, targetX, targetY, color) {
+                this.x = x; this.y = y; this.targetX = targetX; this.targetY = targetY;
+                this.color = color; this.speed = 3;
+                this.angle = Math.atan2(targetY - y, targetX - x);
+                this.distanceToTarget = Math.sqrt((targetX - x)**2 + (targetY - y)**2);
+                this.distanceTraveled = 0; this.coordinates = []; this.coordinateCount = 3;
+                while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+            }
+            update(index) {
+                this.coordinates.pop(); this.coordinates.unshift([this.x, this.y]);
+                if (this.distanceTraveled >= this.distanceToTarget) {
+                    createParticles(this.targetX, this.targetY, this.color);
+                    fireworks.splice(index, 1);
+                } else {
+                    this.x += Math.cos(this.angle) * this.speed;
+                    this.y += Math.sin(this.angle) * this.speed;
+                    this.distanceTraveled = Math.sqrt((this.x - this.coordinates[this.coordinates.length - 1][0])**2 + 
+                                                   (this.y - this.coordinates[this.coordinates.length - 1][1])**2) + this.distanceTraveled;
+                }
+                 this.speed *= 0.99;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                ctx.lineTo(this.x, this.y); ctx.strokeStyle = this.color; ctx.lineWidth = 3; ctx.stroke();
+            }
+        }
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x; this.y = y; this.color = color;
+                this.size = Math.random() * 2 + 1; this.speed = Math.random() * 5 + 2;
+                this.angle = Math.random() * Math.PI * 2; this.gravity = 0.08; this.alpha = 1;
+                this.decay = Math.random() * 0.015 + 0.015; this.coordinates = []; this.coordinateCount = 5;
+                 while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+            }
+            update(index) {
+                 this.coordinates.pop(); this.coordinates.unshift([this.x, this.y]);
+                this.speed *= 0.98; this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed + this.gravity; this.alpha -= this.decay;
+                if (this.alpha <= this.decay) { particles.splice(index, 1); }
+            }
+            draw() {
+                ctx.beginPath();
+                 ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                ctx.lineTo(this.x, this.y);
+                ctx.strokeStyle = `rgba(${hexToRgb(this.color).r}, ${hexToRgb(this.color).g}, ${hexToRgb(this.color).b}, ${this.alpha})`;
+                ctx.lineWidth = this.size; ctx.stroke();
+            }
+        }
+        function hexToRgb(hex) {
+            let r = 0, g = 0, b = 0;
+            if (hex.length == 4) { r = parseInt(hex[1] + hex[1], 16); g = parseInt(hex[2] + hex[2], 16); b = parseInt(hex[3] + hex[3], 16);
+            } else if (hex.length == 7) { r = parseInt(hex[1] + hex[2], 16); g = parseInt(hex[3] + hex[4], 16); b = parseInt(hex[5] + hex[6], 16); }
+            return { r, g, b };
+        }
+        function createParticles(x, y, color) {
+            let particleCount = 100;
+            while (particleCount--) { particles.push(new Particle(x, y, color)); }
+        }
+        const fireworkColors = ['#FFD700', '#FF8C00', '#FF4500', '#FFFFFF', '#FFC0CB', '#ADFF2F'];
+        function launchFirework() {
+            if (fireworks.length < 10) {
+                 const startX = canvas.width / 2; const startY = canvas.height;
+                const targetX = Math.random() * (canvas.width * 0.6) + (canvas.width * 0.2);
+                const targetY = Math.random() * (canvas.height / 2);
+                const color = fireworkColors[Math.floor(Math.random() * fireworkColors.length)];
+                fireworks.push(new Firework(startX, startY, targetX, targetY, color));
+            }
+        }
+        function animateFireworks() {
+            requestAnimationFrame(animateFireworks);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            fireworks.forEach((f, i) => { f.update(i); f.draw(); });
+            particles.forEach((p, i) => { p.update(i); p.draw(); });
+        }
+        // --- Firework Code ENDS ---
+
+
+        // --- Main Page Logic ---
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const senderName = urlParams.get('sender');
-            const greetingElement = document.getElementById('greetingMessage');
+            const mainGreetingElement = document.getElementById('mainGreeting');
+            const fromSenderElement = document.getElementById('fromSenderMessage');
 
             if (senderName) {
-                // Decode the name in case it has spaces or special characters
                 const decodedSenderName = decodeURIComponent(senderName.replace(/\+/g, ' '));
-                greetingElement.textContent = `Happy Diwali, ${decodedSenderName}!`;
-                greetingElement.classList.add('animated-greeting');
+                mainGreetingElement.textContent = `शुभ दीपावली!`;
+                fromSenderElement.textContent = `${decodedSenderName} की ओर से`;
+                mainGreetingElement.classList.add('animated-greeting-main');
+                fromSenderElement.classList.add('animated-greeting-from');
             } else {
-                greetingElement.textContent = "Shubh Deepavali!"; // Default greeting
-                greetingElement.classList.add('animated-greeting');
+                mainGreetingElement.textContent = "दीपों का त्यौहार";
+                fromSenderElement.textContent = "आपको और आपके परिवार को दिवाली की शुभकामनाएँ!";
+                mainGreetingElement.classList.add('animated-greeting-main');
+                fromSenderElement.classList.add('animated-greeting-from');
             }
 
-            // If GitHub Pages, ensure laxmi.gif path is correct
-            // If your repo name is 'my-diwali-wishes', and laxmi.gif is in the root:
-            // const ghPagesBasePath = "/my-diwali-wishes/"; // Change 'my-diwali-wishes' to your repo name
-            // if (window.location.hostname.includes('github.io')) {
-            //     const imageElement = document.getElementById('diwaliImage');
-            //     if (!imageElement.src.includes(ghPagesBasePath) && !imageElement.src.startsWith('http')) {
-            //          imageElement.src = ghPagesBasePath + imageElement.getAttribute('src');
-            //     }
-            // }
+            animateFireworks();
+            setTimeout(() => launchFirework(), 500);
+            setInterval(launchFirework, 2000 + Math.random() * 2000); 
+
+            adjustImagePathForGitHubPages();
         };
 
-        function generateLink() {
+        async function generateAndShareLink() { // Function name changed
             const nameInput = document.getElementById('senderNameInput');
             const senderName = nameInput.value.trim();
 
             if (senderName === "") {
-                alert("Kripya apna naam daalein!");
+                alert("कृपया अपना नाम दर्ज करें!");
                 return;
             }
 
-            // Get the base URL (without any existing query parameters)
             const baseUrl = window.location.href.split('?')[0];
-            
-            // Encode the name for safe use in URL
             const encodedSenderName = encodeURIComponent(senderName);
-            
             const newLink = `${baseUrl}?sender=${encodedSenderName}`;
 
+            // Data for Web Share API
+            const shareData = {
+                title: 'दीपावली की शुभकामनाएँ!',
+                text: `${senderName} की ओर से दीपावली की हार्दिक शुभकामनाएँ! इस विशेष संदेश को देखने के लिए लिंक पर क्लिक करें:`,
+                url: newLink
+            };
+
+            // Always display the link for manual copy as a primary fallback
             const generatedLinkInput = document.getElementById('generatedLink');
+            const generatedLinkContainer = document.getElementById('generatedLinkContainer');
             generatedLinkInput.value = newLink;
-            document.getElementById('generatedLinkContainer').style.display = 'block';
-            
-            // Optional: Select the text for easy copying
-            generatedLinkInput.focus();
-            generatedLinkInput.select();
+            generatedLinkContainer.style.display = 'block';
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    // console.log('Content shared successfully');
+                    // No alert needed here, as the native share dialog itself is feedback
+                } catch (err) {
+                    // console.error('Error sharing:', err);
+                    // If user cancels or an error occurs, they can still use the copy link
+                    // alert('शेयर नहीं किया जा सका। कृपया लिंक को मैन्युअल रूप से कॉपी करें।');
+                    generatedLinkInput.focus(); // Focus for manual copy if share fails
+                    generatedLinkInput.select();
+                }
+            } else {
+                // Web Share API not supported, user has to copy manually
+                // console.log('Web Share API not supported. User needs to copy manually.');
+                // alert('आपका ब्राउज़र सीधे शेयरिंग का समर्थन नहीं करता है। कृपया लिंक को कॉपी करके शेयर करें।');
+                generatedLinkInput.focus(); // Focus for manual copy
+                generatedLinkInput.select();
+            }
         }
 
         function copyLink() {
             const linkInput = document.getElementById('generatedLink');
             linkInput.select();
-            linkInput.setSelectionRange(0, 99999); // For mobile devices
+            linkInput.setSelectionRange(0, 99999); 
 
             try {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(linkInput.value).then(() => {
-                        alert('Link clipboard mein copy ho gaya hai!');
+                        alert('लिंक क्लिपबोर्ड पर कॉपी हो गया है!');
                     }).catch(err => {
-                        console.error('Clipboard API copy failed:', err);
-                        // Fallback for browsers that might fail (e.g. in an iframe without permission)
                         fallbackCopyTextToClipboard(linkInput.value);
                     });
                 } else {
-                    // Fallback for older browsers
                     fallbackCopyTextToClipboard(linkInput.value);
                 }
             } catch (err) {
-                console.error('Error copying text: ', err);
-                alert('Link copy karne mein error aaya. Kripya manually copy karein.');
+                alert('लिंक कॉपी करने में त्रुटि हुई। कृपया मैन्युअल रूप से कॉपी करें।');
             }
         }
 
         function fallbackCopyTextToClipboard(text) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
-            
-            // Avoid scrolling to bottom
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.position = "fixed";
-
+            textArea.style.top = "0"; textArea.style.left = "0"; textArea.style.position = "fixed";
             document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
+            textArea.focus(); textArea.select();
             try {
                 const successful = document.execCommand('copy');
                 if (successful) {
-                    alert('Link clipboard mein copy ho gaya hai (fallback)!');
+                    alert('लिंक क्लिपबोर्ड पर कॉपी हो गया है (fallback)!');
                 } else {
-                    alert('Link copy nahi ho saka. Kripya manually copy karein.');
+                    alert('लिंक कॉपी नहीं हो सका। कृपया मैन्युअल रूप से कॉपी करें।');
                 }
             } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-                alert('Link copy nahi ho saka. Kripya manually copy karein.');
+                alert('लिंक कॉपी नहीं हो सका। कृपया मैन्युअल रूप से कॉपी करें।');
             }
             document.body.removeChild(textArea);
         }
 
-        // GitHub Pages specific path adjustment for laxmi.gif
-        // This assumes your HTML file and laxmi.gif are in the root of your repository.
-        // If your repository is named 'diwali-wisher', the path for GitHub Pages
-        // would be '/diwali-wisher/laxmi.gif'.
-        // This code tries to be smart about it.
-        if (window.location.hostname.endsWith('github.io')) {
-            const imageElement = document.getElementById('diwaliImage');
-            let currentSrc = imageElement.getAttribute('src');
-            
-            // Only modify if it's a relative path and doesn't already include the repo name
-            if (!currentSrc.startsWith('http') && !currentSrc.startsWith('/')) {
-                 // Example: username.github.io/repo-name/
-                const pathParts = window.location.pathname.split('/');
-                // pathParts will be ['', 'repo-name', 'index.html' or '']
-                // We need the repo name, which is usually pathParts[1]
-                if (pathParts.length > 1 && pathParts[1] !== "") {
-                    const repoName = pathParts[1];
-                    if (!currentSrc.startsWith(repoName + '/')) { // check if repo name is already prefixed
-                         imageElement.src = `/${repoName}/${currentSrc}`;
+        function adjustImagePathForGitHubPages() {
+            if (window.location.hostname.endsWith('github.io')) {
+                const imageElement = document.getElementById('diwaliImage');
+                let currentSrc = imageElement.getAttribute('src');
+                if (!currentSrc.startsWith('http') && !currentSrc.startsWith('/')) {
+                    const pathParts = window.location.pathname.split('/');
+                    if (pathParts.length > 1 && pathParts[1] !== "" && pathParts[1] !== "index.html") {
+                        const repoName = pathParts[1];
+                        if (!currentSrc.toLowerCase().includes(`/${repoName.toLowerCase()}/`)) {
+                             imageElement.src = `/${repoName}/${currentSrc}`;
+                        }
                     }
                 }
             }
         }
-
     </script>
 </body>
 </html>

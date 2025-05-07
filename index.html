@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diwali Wishes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 95vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+        #diwaliImage {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        #greetingMessage {
+            font-size: 2em;
+            color: #ff6600;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .input-group {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px); /* Account for padding and border */
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #generatedLinkContainer {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        #generatedLinkContainer input[type="text"] {
+            width: calc(100% - 80px); /* Adjust width for button */
+            margin-right: 5px;
+        }
+        #generatedLinkContainer button {
+            width: 70px;
+            padding: 10px 5px;
+        }
+
+        /* Animation */
+        .animated-greeting {
+            animation: festiveAnimation 2.5s ease-out forwards;
+            opacity: 0; /* Start hidden */
+        }
+
+        @keyframes festiveAnimation {
+            0% {
+                transform: scale(0.5) rotate(-10deg);
+                opacity: 0;
+                color: #FFC107; /* Amber */
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+                opacity: 0.7;
+                color: #FF9800; /* Orange */
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+                color: #E65100; /* Deep Orange */
+            }
+        }
+
+        .footer {
+            margin-top: auto; /* Pushes footer to bottom */
+            padding-top: 20px;
+            font-size: 0.8em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="diwaliImage" src="laxmi.gif" alt="Happy Diwali Animation">
+
+        <h1 id="greetingMessage"></h1>
+
+        <div class="input-group">
+            <label for="senderNameInput">Apna Naam Likhein:</label><br>
+            <input type="text" id="senderNameInput" placeholder="Yahan apna naam daalein">
+        </div>
+
+        <button onclick="generateLink()">Wishing Link Banayein</button>
+
+        <div id="generatedLinkContainer" style="display:none;">
+            <p>Yeh link copy karke share karein:</p>
+            <input type="text" id="generatedLink" readonly>
+            <button onclick="copyLink()">Copy</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Happy Diwali!</p>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const senderName = urlParams.get('sender');
+            const greetingElement = document.getElementById('greetingMessage');
+
+            if (senderName) {
+                // Decode the name in case it has spaces or special characters
+                const decodedSenderName = decodeURIComponent(senderName.replace(/\+/g, ' '));
+                greetingElement.textContent = `Happy Diwali, ${decodedSenderName}!`;
+                greetingElement.classList.add('animated-greeting');
+            } else {
+                greetingElement.textContent = "Shubh Deepavali!"; // Default greeting
+                greetingElement.classList.add('animated-greeting');
+            }
+
+            // If GitHub Pages, ensure laxmi.gif path is correct
+            // If your repo name is 'my-diwali-wishes', and laxmi.gif is in the root:
+            // const ghPagesBasePath = "/my-diwali-wishes/"; // Change 'my-diwali-wishes' to your repo name
+            // if (window.location.hostname.includes('github.io')) {
+            //     const imageElement = document.getElementById('diwaliImage');
+            //     if (!imageElement.src.includes(ghPagesBasePath) && !imageElement.src.startsWith('http')) {
+            //          imageElement.src = ghPagesBasePath + imageElement.getAttribute('src');
+            //     }
+            // }
+        };
+
+        function generateLink() {
+            const nameInput = document.getElementById('senderNameInput');
+            const senderName = nameInput.value.trim();
+
+            if (senderName === "") {
+                alert("Kripya apna naam daalein!");
+                return;
+            }
+
+            // Get the base URL (without any existing query parameters)
+            const baseUrl = window.location.href.split('?')[0];
+            
+            // Encode the name for safe use in URL
+            const encodedSenderName = encodeURIComponent(senderName);
+            
+            const newLink = `${baseUrl}?sender=${encodedSenderName}`;
+
+            const generatedLinkInput = document.getElementById('generatedLink');
+            generatedLinkInput.value = newLink;
+            document.getElementById('generatedLinkContainer').style.display = 'block';
+            
+            // Optional: Select the text for easy copying
+            generatedLinkInput.focus();
+            generatedLinkInput.select();
+        }
+
+        function copyLink() {
+            const linkInput = document.getElementById('generatedLink');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999); // For mobile devices
+
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(linkInput.value).then(() => {
+                        alert('Link clipboard mein copy ho gaya hai!');
+                    }).catch(err => {
+                        console.error('Clipboard API copy failed:', err);
+                        // Fallback for browsers that might fail (e.g. in an iframe without permission)
+                        fallbackCopyTextToClipboard(linkInput.value);
+                    });
+                } else {
+                    // Fallback for older browsers
+                    fallbackCopyTextToClipboard(linkInput.value);
+                }
+            } catch (err) {
+                console.error('Error copying text: ', err);
+                alert('Link copy karne mein error aaya. Kripya manually copy karein.');
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            
+            // Avoid scrolling to bottom
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('Link clipboard mein copy ho gaya hai (fallback)!');
+                } else {
+                    alert('Link copy nahi ho saka. Kripya manually copy karein.');
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+                alert('Link copy nahi ho saka. Kripya manually copy karein.');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // GitHub Pages specific path adjustment for laxmi.gif
+        // This assumes your HTML file and laxmi.gif are in the root of your repository.
+        // If your repository is named 'diwali-wisher', the path for GitHub Pages
+        // would be '/diwali-wisher/laxmi.gif'.
+        // This code tries to be smart about it.
+        if (window.location.hostname.endsWith('github.io')) {
+            const imageElement = document.getElementById('diwaliImage');
+            let currentSrc = imageElement.getAttribute('src');
+            
+            // Only modify if it's a relative path and doesn't already include the repo name
+            if (!currentSrc.startsWith('http') && !currentSrc.startsWith('/')) {
+                 // Example: username.github.io/repo-name/
+                const pathParts = window.location.pathname.split('/');
+                // pathParts will be ['', 'repo-name', 'index.html' or '']
+                // We need the repo name, which is usually pathParts[1]
+                if (pathParts.length > 1 && pathParts[1] !== "") {
+                    const repoName = pathParts[1];
+                    if (!currentSrc.startsWith(repoName + '/')) { // check if repo name is already prefixed
+                         imageElement.src = `/${repoName}/${currentSrc}`;
+                    }
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>
